@@ -9,7 +9,7 @@ namespace Movies.Models
 		public int Id { get; set; }
 
 		[Required]
-		// definiramo da je minimalna duzina 2, a maksimalna 200 karaktera
+		// definiramo da je minimalna duzina 2, a mak 200 karaktera
 		[StringLength(200, MinimumLength = 2)]
 		public string Title { get; set; }
 
