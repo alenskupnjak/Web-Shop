@@ -7,14 +7,13 @@ namespace Movies.Models
 		[Key]
 		public int Id { get; set; }
 
-
 		[Required]
 		[StringLength(200, MinimumLength = 2)]
 		public string Title { get; set; }
 
-
 		public string Description { get; set; }
 
+		public bool Active { get; set; } = true;
 
 		[Required]
 		// definiramo quantity da je decimalni broj sa 9 znamenki, od toga 2 iza decimalne tocke
@@ -25,18 +24,13 @@ namespace Movies.Models
 		[Column(TypeName = "decimal(9,2)")]
 		public decimal Price { get; set; }
 
-
 		[ForeignKey("ProductId")]
 		public virtual ICollection<ProductCategory> ProductCategories { get; set; }
-
 
 		[ForeignKey("ProductId")]
 		public virtual ICollection<OrderItem> OrderItems { get; set; }
 
-
 		[ForeignKey("ProductId")]
 		public virtual ICollection<ProductImage> ProductImages { get; set; }
-
-
 	}
 }

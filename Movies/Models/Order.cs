@@ -25,18 +25,15 @@ namespace Movies.Models
 		[StringLength(100, MinimumLength = 2)]
 		public string BillingLastName { get; set; }
 
-
 		[Required(ErrorMessage = "Email Address is required")]
 		[StringLength(200)]
 		[DataType(DataType.EmailAddress, ErrorMessage = "Email is not valid")]
 		public string BillingEmail { get; set; }
 
-
 		[Required(ErrorMessage = "Phone number is required")]
 		[StringLength(50)]
 		[DataType(DataType.PhoneNumber)]
 		public string BillingPhone { get; set; }
-
 
 		[Required(ErrorMessage = "Address is required")]
 		[StringLength(200)]
@@ -56,18 +53,15 @@ namespace Movies.Models
 		[StringLength(200)]
 		public string BillingCountry { get; set; }
 
-
 		// Shipping
 		#region Shipping
 		[Required(ErrorMessage = "First name is required")]
 		[StringLength(200)]
 		public string ShippingFirstName { get; set; }
 
-
 		[Required(ErrorMessage = "Last name is required")]
 		[StringLength(100)]
 		public string ShippingLastName { get; set; }
-
 
 		[Required(ErrorMessage = "Email Address is required")]
 		[StringLength(200)]
@@ -101,7 +95,6 @@ namespace Movies.Models
 
 		public string Message { get; set; }
 		public string UserId { get; set; }
-
 
 		[ForeignKey("OrderId")]
 		public virtual ICollection<OrderItem> OrderItems { get; set; }
