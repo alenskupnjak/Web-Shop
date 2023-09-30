@@ -38,14 +38,15 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-		name: "default",
+name: "default",
 		pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();
 
 
-
-
+// 0*- drop-database
 // 1*  add-mirgation InitialCreate
 // 2*  update-database
+
+//add - migration - o data / Migrations step01

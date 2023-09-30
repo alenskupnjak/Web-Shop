@@ -9,11 +9,11 @@ using Movies.Data;
 
 #nullable disable
 
-namespace Movies.Data.Migrations
+namespace Movies.data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230930123428_step01")]
-    partial class step01
+    [Migration("20230930172415_User")]
+    partial class User
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,38 +50,6 @@ namespace Movies.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            Name = "Customer",
-                            NormalizedName = "CUSTOMER"
-                        },
-                        new
-                        {
-                            Id = "3",
-                            Name = "SuperAdmin",
-                            NormalizedName = "SUPERADMIN"
-                        },
-                        new
-                        {
-                            Id = "4",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = "5",
-                            Name = "User1",
-                            NormalizedName = "USER1"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

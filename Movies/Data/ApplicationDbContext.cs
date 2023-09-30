@@ -48,19 +48,5 @@ namespace Movies.Data
 		public DbSet<OrderItem> OrderItem { get; set; }
 
 
-		protected override void OnModelCreating(ModelBuilder builder)
-		{
-			base.OnModelCreating(builder);
-
-			builder.Entity<IdentityRole>()
-				.HasData(
-				new IdentityRole { Id = "1", Name = "Admin", NormalizedName = "ADMIN" },
-				new IdentityRole { Id = "2", Name = "Customer", NormalizedName = "CUSTOMER" },
-				new IdentityRole { Id = "3", Name = "SuperAdmin", NormalizedName = "SUPERADMIN" },
-				new IdentityRole { Id = "4", Name = "User", NormalizedName = "USER" },
-				new IdentityRole { Id = "5", Name = "User1", NormalizedName = "USER1" }
-				);
-		}
-
 	}
 }
