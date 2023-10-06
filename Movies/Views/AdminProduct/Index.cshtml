@@ -22,6 +22,9 @@
 				@Html.DisplayNameFor(model => model.Description)
 			</th>
 			<th>
+				Category
+			</th>
+			<th>
 				@Html.DisplayNameFor(model => model.Active)
 			</th>
 			<th>
@@ -49,6 +52,10 @@
 							{
 								<img src="@image.FileName" alt="@item.Title" height="100" />
 							}
+							else
+							{
+								<img src="~/images/noimage.png" alt="No image" height="100" />
+							}
 						}
 						catch (Exception)
 						{
@@ -58,6 +65,13 @@
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Description)
+				</td>
+				<td>
+					@foreach (var category in item.ProductCategories)
+					{
+						var cat = (ViewBag.Categories as List<Category>).FirstOrDefault(x => x.Id == category.CategoryId);
+						<span>@cat.Title</span> <br />
+					}
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Active)

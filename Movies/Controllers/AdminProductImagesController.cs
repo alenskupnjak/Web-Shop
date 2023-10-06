@@ -26,9 +26,11 @@ namespace Movies.Controllers
 				return RedirectToAction("Index", "AdminProduct");
 			}
 			ViewBag.ProductId = id;
-			return _context.ProductImage != null ?
-									View(await _context.ProductImage.ToListAsync()) :
-									Problem("Entity set 'ApplicationDbContext.ProductImage'  is null.");
+			if (_context.ProductImage == null) return Problem("Entity set 'ApplicationDbContext.ProductImage'  is null.");
+			var product = await _context.ProductImage.ToListAsync();
+			product = product.Where(p => p.ProductId == id).ToList();
+
+			return View(product);
 		}
 
 		// GET: AdminProductImages/Details/5
@@ -126,7 +128,7 @@ namespace Movies.Controllers
 			{
 				return NotFound();
 			}
-
+			ModelState.Remove("ProductTitle");
 			if (ModelState.IsValid)
 			{
 				try
@@ -157,14 +159,12 @@ namespace Movies.Controllers
 			{
 				return NotFound();
 			}
-
 			var productImage = await _context.ProductImage
 					.FirstOrDefaultAsync(m => m.Id == id);
 			if (productImage == null)
 			{
 				return NotFound();
 			}
-
 			return View(productImage);
 		}
 

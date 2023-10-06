@@ -8,7 +8,7 @@ namespace Movies.Models
 		[Key]
 		public int Id { get; set; }
 		public int ProductId { get; set; }
-		public bool IsMainImage { get; set; }
+		public bool IsMainImage { get; set; } = true;
 
 		[StringLength(200, MinimumLength = 2)]
 		public string Title { get; set; }

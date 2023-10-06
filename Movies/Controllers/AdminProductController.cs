@@ -27,7 +27,9 @@ namespace Movies.Controllers
 			foreach (var product in products)
 			{
 				product.ProductImages = _context.ProductImage.Where(pi => pi.ProductId == product.Id).ToList();
+				product.ProductCategories = _context.ProductCategory.Where(pc => pc.ProductId == product.Id).ToList();
 			}
+			ViewBag.Categories = _context.Category.ToList();
 			return View(products);
 		}
 
@@ -82,13 +84,14 @@ namespace Movies.Controllers
 			{
 				return NotFound();
 			}
-
 			var product = await _context.Product.FindAsync(id);
 			if (product == null)
 			{
 				return NotFound();
 			}
 			product.ProductImages = _context.ProductImage.Where(pi => pi.ProductId == product.Id).ToList();
+			product.ProductCategories = _context.ProductCategory.Where(pc => pc.ProductId == product.Id).ToList();
+			ViewBag.Categories = _context.Category.ToList();
 			return View(product);
 		}
 
@@ -107,7 +110,6 @@ namespace Movies.Controllers
 			ModelState.Remove("ProductCategories");
 			ModelState.Remove("OrderItems");
 			ModelState.Remove("ProductImages");
-
 
 			if (ModelState.IsValid)
 			{
@@ -131,6 +133,33 @@ namespace Movies.Controllers
 			}
 			return View(product);
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> Editcategory(int id)
+		{
+			if (_context.ProductCategory == null)
+			{
+				return Problem("Entity set 'ApplicationDbContext.ProductCategory'  is null.");
+			}
+			List<Category> categories = await _context.Category.ToListAsync();
+			foreach (var cat in categories)
+			{
+				var checkbox = Request.Form[cat.Title];
+				if (checkbox.Contains("true"))
+				{
+					var p = _context.ProductCategory.FirstOrDefault(x => x.CategoryId == cat.Id && x.ProductId == id);
+					if (p == null) _context.ProductCategory.Add(new ProductCategory { ProductId = id, CategoryId = cat.Id });
+				}
+				else
+				{
+					var p = _context.ProductCategory.FirstOrDefault(x => x.CategoryId == cat.Id && x.ProductId == id);
+					if (p != null) _context.ProductCategory.Remove(p);
+				}
+			}
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Edit), new { id });
+		}
+
 
 		// GET: AdminProduct/Delete/5
 		[HttpGet]
