@@ -17,11 +17,18 @@ namespace Movies.Controllers
 		}
 
 		// GET: AdminProduct
+		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			return _context.Product != null ?
-									View(await _context.Product.ToListAsync()) :
-									Problem("Entity set 'ApplicationDbContext.Product'  is null.");
+			if (_context.Product == null)
+				return Problem("Entity set 'ApplicationDbContext.Product'  is null.");
+
+			var products = await _context.Product.ToListAsync();
+			foreach (var product in products)
+			{
+				product.ProductImages = _context.ProductImage.Where(pi => pi.ProductId == product.Id).ToList();
+			}
+			return View(products);
 		}
 
 		// GET: AdminProduct/Details/5
@@ -38,7 +45,7 @@ namespace Movies.Controllers
 			{
 				return NotFound();
 			}
-
+			product.ProductImages = _context.ProductImage.Where(pi => pi.ProductId == product.Id).ToList();
 			return View(product);
 		}
 
@@ -68,6 +75,7 @@ namespace Movies.Controllers
 		}
 
 		// GET: AdminProduct/Edit/5
+		[HttpGet]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null || _context.Product == null)
@@ -80,6 +88,7 @@ namespace Movies.Controllers
 			{
 				return NotFound();
 			}
+			product.ProductImages = _context.ProductImage.Where(pi => pi.ProductId == product.Id).ToList();
 			return View(product);
 		}
 
@@ -124,6 +133,7 @@ namespace Movies.Controllers
 		}
 
 		// GET: AdminProduct/Delete/5
+		[HttpGet]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null || _context.Product == null)
@@ -153,6 +163,9 @@ namespace Movies.Controllers
 			var product = await _context.Product.FindAsync(id);
 			if (product != null)
 			{
+				// ovo služi da se izbrišu svi zapisi iz tabele ProductImage koji imaju ProductId = product.Id
+				// jer može biti više slika za jedan proizvod
+				_context.ProductImage.RemoveRange(_context.ProductImage.Where(pc => pc.ProductId == product.Id));
 				_context.Product.Remove(product);
 			}
 

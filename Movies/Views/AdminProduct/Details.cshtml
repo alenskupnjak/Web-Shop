@@ -9,6 +9,23 @@
 <div>
 	<h4>Product</h4>
 	<hr />
+	@if (Model.ProductImages != null)
+	{
+		<div class="row">
+			@foreach (var image in Model.ProductImages)
+			{
+				<div class="col-sm-3">
+					<img src="@image.FileName" alt="@Model.Title" height="100" />
+				</div>
+			}
+		</div>
+	}
+	else
+	{
+		<img src="~/images/noimage.png" alt="No image" height="100" />
+	}
+	<hr />
+
 	<dl class="row">
 		<dt class="col-sm-2">
 			@Html.DisplayNameFor(model => model.Title)

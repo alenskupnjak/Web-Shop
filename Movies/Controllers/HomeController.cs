@@ -12,7 +12,7 @@ namespace Movies.Controllers
 		{
 			_logger = logger;
 		}
-
+		[HttpGet]
 		public IActionResult Index()
 		{
 			return View();

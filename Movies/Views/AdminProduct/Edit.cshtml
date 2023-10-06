@@ -8,6 +8,25 @@
 
 <h4>Product</h4>
 <hr />
+@if (Model.ProductImages != null)
+{
+	<div class="row">
+		@foreach (var image in Model.ProductImages)
+		{
+			<div class="col-sm-3">
+				<img src="@image.FileName" alt="@Model.Title" height="100" />
+			</div>
+		}
+	</div>
+}
+else
+{
+	<img src="~/images/noimage.png" alt="No image" height="100" />
+}
+
+<a asp-controller="AdminProductImages" asp-action="Index" asp-route-id="@Model.Id"/>Edit Image</a>
+
+<hr />
 <div class="row">
 	<div class="col-md-4">
 		<form asp-action="Edit">

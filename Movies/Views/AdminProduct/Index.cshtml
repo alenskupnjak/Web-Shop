@@ -4,7 +4,7 @@
 	ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Index Admin product</h1>
 
 <p>
 	<a asp-action="Create">Create New</a>
@@ -14,6 +14,9 @@
 		<tr>
 			<th>
 				@Html.DisplayNameFor(model => model.Title)
+			</th>
+			<th>
+				Title Image
 			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.Description)
@@ -36,6 +39,22 @@
 			<tr>
 				<td>
 					@Html.DisplayFor(modelItem => item.Title)
+				</td>
+				<td>
+					@{
+						try
+						{
+							var image = item.ProductImages.FirstOrDefault(x => x.IsMainImage == true);
+							if (image != null)
+							{
+								<img src="@image.FileName" alt="@item.Title" height="100" />
+							}
+						}
+						catch (Exception)
+						{
+							<img src="~/images/noimage.png" alt="No image" height="100" />
+						}
+					}
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Description)

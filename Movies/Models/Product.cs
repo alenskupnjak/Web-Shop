@@ -18,11 +18,11 @@ namespace Movies.Models
 		[Required]
 		// definiramo quantity da je decimalni broj sa 9 znamenki, od toga 2 iza decimalne tocke
 		[Column(TypeName = "decimal(9,2)")]
-		[DataType(DataType.Currency)]
 		public decimal Quantity { get; set; }
 
 		[Required]
 		[Column(TypeName = "decimal(9,2)")]
+		[DataType(DataType.Currency)]
 		public decimal Price { get; set; }
 
 		[ForeignKey("ProductId")]
