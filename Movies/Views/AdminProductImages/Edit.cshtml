@@ -14,9 +14,9 @@
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<input type="hidden" asp-for="Id" />
 			<div class="form-group">
-				<label asp-for="ProductId" class="control-label"></label>
-				<select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
-				<span asp-validation-for="ProductId" class="text-danger"></span>
+				@*<label asp-for="ProductId" class="control-label"></label>*@
+				<input type="hidden" asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></input>
+				@*<span asp-validation-for="ProductId" class="text-danger"></span>*@
 			</div>
 			<div class="form-group form-check">
 				<label class="form-check-label">
@@ -29,12 +29,12 @@
 				<span asp-validation-for="Title" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<label asp-for="FileName" class="control-label"></label>
-				<input asp-for="FileName" class="form-control" />
-				<span asp-validation-for="FileName" class="text-danger"></span>
+				@*<label asp-for="FileName" class="control-label"></label>*@
+				<input type="hidden" asp-for="FileName" class="form-control" />
+				@*<span asp-validation-for="FileName" class="text-danger"></span>*@
 			</div>
 			<div class="form-group">
-				<input type="submit" value="Save" class="btn btn-primary" />
+				<input type="submit" value="Save" class="btn btn-primary m-3" />
 			</div>
 		</form>
 	</div>

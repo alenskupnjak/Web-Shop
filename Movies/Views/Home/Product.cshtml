@@ -1,16 +1,13 @@
-﻿@model IEnumerable<Movies.Models.Product>
+﻿@model List<Movies.Models.Product>
 
 @{
-	ViewData["Title"] = "Product";
+	ViewData["Title"] = "Products";
 }
 
-<h1>Product List</h1>
-
-
+<h2>Product List</h2>
 
 <div class="row mb-5">
 	<div class="col-2">
-
 		<div class="dropdown">
 			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
 							data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -70,7 +67,7 @@
 								<td>@item.Price EUR</td>
 								<td>
 									<form>
-										<input type="submit" class="btn btn-success" value="Add to cart" >
+										<input type="submit" class="btn btn-success btn-sm" value="Add to cart" >
 									</form>
 								</td>
 							</tr>

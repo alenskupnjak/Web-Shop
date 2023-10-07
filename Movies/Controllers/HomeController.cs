@@ -10,6 +10,7 @@ namespace Movies.Controllers
 		private readonly ILogger<HomeController> _logger;
 		private readonly ApplicationDbContext _context;
 
+		// konstruktor
 		public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
 		{
 			_logger = logger;
@@ -29,7 +30,6 @@ namespace Movies.Controllers
 		public IActionResult Product(int? categoryId)
 		{
 			List<Product> products = _context.Product.ToList();
-
 			foreach (var product in products)
 			{
 				product.ProductImages = _context.ProductImage.Where(pi => pi.ProductId == product.Id).ToList();
@@ -37,7 +37,7 @@ namespace Movies.Controllers
 			}
 			if (categoryId != null)
 			{
-				products = products.Where(p => p.ProductCategories.Any(pc => pc.CategoryId == categoryId)).ToList();
+				products = products.Where(p => p.ProductCategories.Any(p => p.CategoryId == categoryId)).ToList();
 			}
 
 			ViewBag.Categories = _context.Category.ToList();

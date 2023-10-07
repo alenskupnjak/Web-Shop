@@ -6,13 +6,12 @@
 
 <h1>Index od Images product</h1>
 
-<p>
-	<a asp-controller="AdminProduct" asp-action="Edit" asp-route-id="@ViewBag.ProductId">Back to Product</a>
-</p>
+<div>
+	<a class="btn btn-primary " asp-controller="AdminProduct" asp-action="Edit" asp-route-id="@ViewBag.ProductId">Back to Product</a>
+	<a class="btn btn-info ms-4" asp-action="Create" asp-route-id="@ViewBag.ProductId">Create New Picture</a>
+</div>
 
-<p>
-	<a asp-action="Create" asp-route-id="@ViewBag.ProductId">Create New</a>
-</p>
+
 <table class="table">
 	<thead>
 		<tr>
@@ -37,6 +36,7 @@
 			<tr>
 				<td>
 					@Html.DisplayFor(modelItem => item.IsMainImage)
+					@Html.CheckBox(item.Title,item.IsMainImage)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Title)

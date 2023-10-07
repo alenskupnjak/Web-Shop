@@ -29,7 +29,6 @@ namespace Movies.Controllers
 			if (_context.ProductImage == null) return Problem("Entity set 'ApplicationDbContext.ProductImage'  is null.");
 			var product = await _context.ProductImage.ToListAsync();
 			product = product.Where(p => p.ProductId == id).ToList();
-
 			return View(product);
 		}
 
@@ -41,13 +40,11 @@ namespace Movies.Controllers
 				return NotFound();
 			}
 
-			var productImage = await _context.ProductImage
-					.FirstOrDefaultAsync(m => m.Id == id);
+			var productImage = await _context.ProductImage.FirstOrDefaultAsync(m => m.Id == id);
 			if (productImage == null)
 			{
 				return NotFound();
 			}
-
 			return View(productImage);
 		}
 
@@ -63,8 +60,6 @@ namespace Movies.Controllers
 		}
 
 		// POST: AdminProductImages/Create
-		// To protect from overposting attacks, enable the specific properties you want to bind to.
-		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create([Bind("Id,ProductId,IsMainImage,Title,FileName")] ProductImage productImage)
@@ -102,12 +97,11 @@ namespace Movies.Controllers
 		// GET: AdminProductImages/Edit/5
 		public async Task<IActionResult> Edit(int? id)
 		{
-			return RedirectToAction("Index", "AdminProduct");
+			//return RedirectToAction("Index", "AdminProduct");
 			if (id == null || _context.ProductImage == null)
 			{
 				return NotFound();
 			}
-
 			var productImage = await _context.ProductImage.FindAsync(id);
 			if (productImage == null)
 			{
@@ -117,13 +111,11 @@ namespace Movies.Controllers
 		}
 
 		// POST: AdminProductImages/Edit/5
-		// To protect from overposting attacks, enable the specific properties you want to bind to.
-		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(int id, [Bind("Id,ProductId,IsMainImage,Title,FileName")] ProductImage productImage)
 		{
-			return RedirectToAction("Index", "AdminProduct");
+			//return RedirectToAction("Index", "AdminProduct");
 			if (id != productImage.Id)
 			{
 				return NotFound();
