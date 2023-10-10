@@ -39,6 +39,9 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// treba dodati za koristenje sessiona
+app.UseSession();
+
 app.MapControllerRoute(
 name: "areas", 
 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
