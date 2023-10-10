@@ -60,3 +60,4 @@ app.Run();
 // 2*  update-database
 
 //add - migration - o data / Migrations step01
+/// dodano
