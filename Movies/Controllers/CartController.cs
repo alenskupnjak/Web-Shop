@@ -9,8 +9,6 @@ namespace Movies.Controllers
 		public const string SessionKeyName = "_cart";
 		private readonly ApplicationDbContext _context;
 
-
-
 		public CartController(ApplicationDbContext context)
 		{
 			_context = context;
