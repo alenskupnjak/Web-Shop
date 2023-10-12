@@ -10,7 +10,7 @@
 		Your cart is empty
 	</div>
 	<hr />
-	<a asp-controller="Home" asp-action="Products">Continue Shopping  </a>
+	<a asp-controller="Home" asp-action="Product">Continue Shopping</a>
 }
 else
 {
@@ -38,30 +38,35 @@ else
 							<input type="submit" class="btn btn-danger btn-sm" value="Remove" />
 						</form>
 					</td>
-					<td>@item.Product.Title</td>
 					<td>
-						@{
-							try
-							{
-								var image = item.Product.ProductImages.FirstOrDefault(x => x.IsMainImage == true);
-								if (image != null)
+						<a asp-controller="Home" asp-action="Product" asp-route-id="@item.Product.Id" style="color:inherit">
+							@item.Product.Title
+						</a>
+					</td>
+					<td>
+						<a asp-controller="Home" asp-action="Product" asp-route-id="@item.Product.Id" style="color:inherit">
+							@{
+								try
 								{
-									<img class="card-img" src="@image.FileName" alt="@item.Product.Title" height="100px" />
+									var image = item.Product.ProductImages.FirstOrDefault(x => x.IsMainImage == true);
+									if (image != null)
+									{
+										<img class="card-img" src="@image.FileName" alt="@item.Product.Title" height="100px" />
+									}
+									else
+									{
+										<img class="card-img" src="~/images/noimage.png" alt="@item.Product.Title" height="100px" />
+									}
 								}
-								else
+								catch
 								{
 									<img class="card-img" src="~/images/noimage.png" alt="@item.Product.Title" height="100px" />
 								}
 							}
-							catch
-							{
-								<img class="card-img" src="~/images/noimage.png" alt="@item.Product.Title" height="100px" />
-							}
-						}
+						</a>
 					</td>
 					<td>@item.Product.Price.ToString("0.00") EUR</td>
 					<td>
-						@*@item.Quantity*@
 						<form method="post" asp-controller="Cart" asp-action="ChangeCartItemQuantity">
 							<input type="hidden" name="productId" value="@item.Product.Id" />
 							<input type="number" placeholder="@item.Quantity" name="quantity" value="@item.Quantity" />
@@ -79,6 +84,6 @@ else
 
 	<hr />
 	<a class="btn btn-primary float-left" asp-controller="Home" asp-action="Product">Continue Shopping</a>
-	<a class="btn btn-success float-right" asp-controller="Home" asp-action="Order">Order Products</a>
+	<a class="btn btn-success" asp-controller="Home" asp-action="Order" style="float:right">Order Products</a>
 }
 

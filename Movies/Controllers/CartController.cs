@@ -77,7 +77,6 @@ namespace Movies.Controllers
 				}
 				HttpContext.Session.SetObjectAsJson(SessionKeyName, cart);
 			}
-
 			return RedirectToAction("Index");
 		}
 
@@ -96,10 +95,7 @@ namespace Movies.Controllers
 				}
 			}
 
-
-
 			HttpContext.Session.SetObjectAsJson(SessionKeyName, cart);
-
 			return RedirectToAction("Index");
 		}
 
@@ -108,7 +104,6 @@ namespace Movies.Controllers
 			List<CartItem> cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>(SessionKeyName);
 			cart.RemoveAll(item => item.Product.Id == productId);
 			HttpContext.Session.SetObjectAsJson(SessionKeyName, cart);
-
 			return RedirectToAction("Index");
 		}
 	}

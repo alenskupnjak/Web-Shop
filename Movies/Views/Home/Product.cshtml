@@ -33,6 +33,7 @@
 		<div class="col-sm-4">
 			<div class="card">
 				<div class="card-body">
+					<a asp-action="Product" asp-route-id="@item.Id" style="color:inherit">
 					<h5 class="card-title">@item.Title</h5>
 					<p class="card-text">@item.Description</p>
 					@{
@@ -53,6 +54,7 @@
 							<img class="card-img" src="~/images/noimage.png" alt="@item.Title" />
 						}
 					}
+					</a>
 					<table class="table table-condensed table-hover">
 						<thread>
 						<tr>
@@ -63,6 +65,7 @@
 						<tbody>
 							<tr>
 								<td>@item.Price EUR</td>
+								<td>@item.Quantity</td>
 								<td>
 									<form method="post" asp-controller="Cart" asp-action="AddToCart">
 										<input type="hidden" name="productId" value="@item.Id" />	
