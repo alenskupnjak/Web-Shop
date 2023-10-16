@@ -4,6 +4,7 @@ using Movies.Data;
 using Movies.Extensions;
 using Movies.Models;
 using System.Diagnostics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Movies.Controllers
 {
@@ -60,11 +61,7 @@ namespace Movies.Controllers
 		public IActionResult Order(List<string> errors)
 		{
 			List<CartItem> cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>(SessionKeyName);
-			if (cart == null)
-			{
-				return RedirectToAction("Index");
-			}
-			if (cart.Count == 0)
+			if (cart == null || cart.Count == 0)
 			{
 				return RedirectToAction("Index");
 			}
@@ -111,6 +108,61 @@ namespace Movies.Controllers
 
 			ViewBag.Errors = errors;
 			return View(cart);
+		}
+
+		[HttpPost]
+		public IActionResult CreateOrder(Order order, bool shippingsameaspersonal)
+		{
+			List<CartItem> cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>(SessionKeyName);
+			if (cart == null || cart.Count == 0)
+			{
+				return RedirectToAction("Index");
+			}
+
+			var errors = new List<string>();
+			for (int i = 0; i < cart.Count; i++)
+			{
+				// check if product still exists
+				var product = _context.Product.Find(cart[i].Product.Id);
+				if (product == null)
+				{
+					cart.RemoveAt(i);
+					i--;
+					errors.Add($"Product with id {cart[i].Product.Id} does not exist anymore!");
+					continue;
+				}
+
+				// check if product is still available
+				if (product.Quantity < cart[i].Quantity)
+				{
+					cart[i].Quantity = product.Quantity;
+					errors.Add($"Product with id {cart[i].Product.Id} has only {product.Quantity} items left!");
+				}
+
+				// check if product is still active
+				if (!product.Active)
+				{
+					cart.RemoveAt(i);
+					i--;
+					errors.Add($"Product with id {cart[i].Product.Id} is not available anymore!");
+					continue;
+				}
+
+			}
+
+			HttpContext.Session.SetObjectAsJson(SessionKeyName, cart);
+			if (errors.Count > 0)
+			{
+				return RedirectToAction("Order", new { errors });
+			}
+
+
+			if (ModelState.IsValid)
+			{
+				// toto save to database order
+			}
+
+			return RedirectToAction("Order", new { errors });
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
