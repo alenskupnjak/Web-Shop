@@ -19,7 +19,7 @@ namespace Movies.Models
 		[Column(TypeName = "decimal(9,2)")]
 		public decimal Price { get; set; }
 
-		[NotMapped]
+		[NotMapped] // ovo znaci da se nece mapirati u bazu
 		public string ProductTitle { get; set; }
 	}
 }

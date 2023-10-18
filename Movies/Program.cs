@@ -43,7 +43,7 @@ app.UseAuthorization();
 app.UseSession();
 
 app.MapControllerRoute(
-name: "areas", 
+name: "areas",
 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 
@@ -60,4 +60,6 @@ app.Run();
 // 2*  update-database
 
 //add - migration - o data / Migrations step01
+
+// Mogli bi jedan update baze za podsjetnik :)
 

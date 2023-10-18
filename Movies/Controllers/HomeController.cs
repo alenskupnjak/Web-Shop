@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Movies.Data;
 using Movies.Extensions;
 using Movies.Models;
 using System.Diagnostics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Movies.Controllers
 {
@@ -13,17 +13,19 @@ namespace Movies.Controllers
 		private readonly ILogger<HomeController> _logger;
 		private readonly ApplicationDbContext _context;
 		public const string SessionKeyName = "_cart";
+		private readonly UserManager<ApplicationUser> _userManager;
 
 		// konstruktor
-		public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+		public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
 		{
 			_logger = logger;
 			_context = context;
+			_userManager = userManager;
 		}
 		[HttpGet]
-		public IActionResult Index()
+		public IActionResult Index(string? message)
 		{
-			return View();
+			return View("Index", message);
 		}
 
 		public IActionResult Privacy()
@@ -58,6 +60,7 @@ namespace Movies.Controllers
 			return View(products);
 		}
 
+		[Authorize] // samo za logirane korisnike, automatski preusmjerava na login ako nije logiran
 		public IActionResult Order(List<string> errors)
 		{
 			List<CartItem> cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>(SessionKeyName);
@@ -110,13 +113,18 @@ namespace Movies.Controllers
 			return View(cart);
 		}
 
-		[HttpPost]
-		public IActionResult CreateOrder(Order order, bool shippingsameaspersonal)
+
+		// CREATE ORDER *** CREATE ORDER *** CREATE ORDER
+		[Authorize]  // samo za logirane korisnike, automatski preusmjerava na login ako nije logiran
+		[HttpPost] // samo za POST metodu
+		public IActionResult CreateOrder(Order order, string shippingsameaspersonal)
 		{
 			List<CartItem> cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>(SessionKeyName);
+
+			// ako nema cart-a u sessionu, preusmjeri na index
 			if (cart == null || cart.Count == 0)
 			{
-				return RedirectToAction("Index");
+				return RedirectToAction("Index", new { Message = "Cart is empty, so no order completed" });
 			}
 
 			var errors = new List<string>();
@@ -136,7 +144,14 @@ namespace Movies.Controllers
 				if (product.Quantity < cart[i].Quantity)
 				{
 					cart[i].Quantity = product.Quantity;
-					errors.Add($"Product with id {cart[i].Product.Id} has only {product.Quantity} items left!");
+					errors.Add($"Product with id {cart[i].Product.Id} has only {product.Quantity} items left!!!");
+					return RedirectToAction("Cart", new { errors = errors });
+				}
+				if (product.Quantity == 0)
+				{
+					cart.RemoveAt(i);
+					i--;
+					errors.Add($"Product with id is not available anymore!");
 				}
 
 				// check if product is still active
@@ -147,19 +162,65 @@ namespace Movies.Controllers
 					errors.Add($"Product with id {cart[i].Product.Id} is not available anymore!");
 					continue;
 				}
-
 			}
 
 			HttpContext.Session.SetObjectAsJson(SessionKeyName, cart);
 			if (errors.Count > 0)
 			{
-				return RedirectToAction("Order", new { errors });
+				return RedirectToAction("Order", new { errors = errors });
 			}
 
+			if (shippingsameaspersonal == "on")
+			{
+				order.ShippingFirstName = order.BillingFirstName;
+				order.ShippingLastName = order.BillingLastName;
+				order.ShippingEmail = order.BillingEmail;
+				order.ShippingPhone = order.BillingPhone;
+				order.ShippingAddress = order.BillingAddress;
+				order.ShippingCity = order.BillingCity;
+				order.ShippingPostalCode = order.BillingPostalCode;
+				order.ShippingCountry = order.BillingCountry;
+			}
+
+			order.DateCreated = DateTime.Now;
+			order.Total = cart.Sum(x => x.Product.Price * x.Quantity);
+			order.UserId = _userManager.GetUserId(User);
+			ModelState.Remove("Id"); // ako ne maknemo Id iz model statea, onda ce se pri validaciji traziti da se popuni Id,
+			ModelState.Remove("OrderItems"); // ako ne maknemo OrderItems iz model statea, onda ce se pri validaciji traziti da se popuni OrderItems,
+			ModelState.Remove("shippingsameaspersonal");
 
 			if (ModelState.IsValid)
 			{
-				// toto save to database order
+				_context.Order.Add(order);
+				_context.SaveChanges();
+				int order_id = order.Id; // ovo je Id koji je generiran u bazi
+				foreach (var item in cart) // dodajem OrderItem-e
+				{
+					OrderItem orderItem = new OrderItem
+					{
+						OrderId = order_id,
+						ProductId = item.Product.Id,
+						Quantity = item.Quantity,
+						Price = item.Product.Price
+					};
+
+					_context.OrderItem.Add(orderItem);
+					_context.Product.Find(item.Product.Id).Quantity -= item.Quantity; // smanjujem kolicinu proizvoda
+					_context.SaveChanges();
+				}
+				HttpContext.Session.Remove(SessionKeyName); // brisem cart iz sessiona
+				return RedirectToAction("Index", new { message = "Hvala na narudbi" });
+			}
+			else
+			{
+				errors.Add("Order is not valid!");
+				foreach (var modelState in ModelState.Values)
+				{
+					foreach (var error in modelState.Errors)
+					{
+						errors.Add(error.ErrorMessage);
+					}
+				}
 			}
 
 			return RedirectToAction("Order", new { errors });

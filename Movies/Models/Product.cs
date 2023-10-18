@@ -7,10 +7,11 @@ namespace Movies.Models
 		[Key]
 		public int Id { get; set; }
 
-		[Required]
+		[Required(ErrorMessage = "Naslov je obavezan!")]
 		[StringLength(200, MinimumLength = 2)]
 		public string Title { get; set; }
 
+		[Required(ErrorMessage = "Opis je obavezan")]
 		public string Description { get; set; }
 
 		public bool Active { get; set; } = true;
