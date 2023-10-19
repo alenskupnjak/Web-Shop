@@ -72,29 +72,32 @@ namespace Movies.Controllers
 			// check if products still exist and are available
 			for (int i = 0; i < cart.Count; i++)
 			{
-				// check if product still exists
-				var product = _context.Product.Find(cart[i].Product.Id);
+				var product = _context.Product.Find(cart[i].Product.Id); // check if product still exists
 				if (product == null)
 				{
 					cart.RemoveAt(i);
 					i--;
-					errors.Add($"Product with id {cart[i].Product.Id} does not exist anymore!");
+					errors.Add("Product with id {cart[i].Product.Id} does not exist anymore!");
 					continue;
 				}
 
-				// check if product is still available
-				if (product.Quantity < cart[i].Quantity)
+				if (product.Quantity < cart[i].Quantity)  // check if product is still available
 				{
 					cart[i].Quantity = product.Quantity;
 					errors.Add($"Product with id {cart[i].Product.Id} has only {product.Quantity} items left!");
 				}
-
-				// check if product is still active
+				if (product.Quantity == 0)
+				{
+					cart.RemoveAt(i);
+					i--;
+					errors.Add("Product " + product.Title + " is out of stock and was removed from cart!");
+					continue;
+				}
 				if (!product.Active)
 				{
 					cart.RemoveAt(i);
 					i--;
-					errors.Add($"Product with id {cart[i].Product.Id} is not available anymore!");
+					errors.Add("Product with id {cart[i].Product.Id} is not available anymore!");
 					continue;
 				}
 
@@ -102,7 +105,6 @@ namespace Movies.Controllers
 
 			HttpContext.Session.SetObjectAsJson(SessionKeyName, cart);
 
-			// add product images and categories to cart items
 			foreach (CartItem item in cart)
 			{
 				item.Product.ProductImages = _context.ProductImage.Where(pi => pi.ProductId == item.Product.Id).ToList();
@@ -114,7 +116,6 @@ namespace Movies.Controllers
 		}
 
 
-		// CREATE ORDER *** CREATE ORDER *** CREATE ORDER
 		[Authorize]  // samo za logirane korisnike, automatski preusmjerava na login ako nije logiran
 		[HttpPost] // samo za POST metodu
 		public IActionResult CreateOrder(Order order, string shippingsameaspersonal)
@@ -124,7 +125,7 @@ namespace Movies.Controllers
 			// ako nema cart-a u sessionu, preusmjeri na index
 			if (cart == null || cart.Count == 0)
 			{
-				return RedirectToAction("Index", new { Message = "Cart is empty, so no order completed" });
+				return RedirectToAction("Index", new { Message = "Cart is empty, so no order completed!" });
 			}
 
 			var errors = new List<string>();
@@ -144,14 +145,14 @@ namespace Movies.Controllers
 				if (product.Quantity < cart[i].Quantity)
 				{
 					cart[i].Quantity = product.Quantity;
-					errors.Add($"Product with id {cart[i].Product.Id} has only {product.Quantity} items left!!!");
+					errors.Add("Product with id {cart[i].Product.Id} has only {product.Quantity} items left!!!");
 					return RedirectToAction("Cart", new { errors = errors });
 				}
 				if (product.Quantity == 0)
 				{
 					cart.RemoveAt(i);
 					i--;
-					errors.Add($"Product with id is not available anymore!");
+					errors.Add("Product with id is not available anymore!");
 				}
 
 				// check if product is still active
@@ -159,7 +160,7 @@ namespace Movies.Controllers
 				{
 					cart.RemoveAt(i);
 					i--;
-					errors.Add($"Product with id {cart[i].Product.Id} is not available anymore!");
+					errors.Add("Product is not active and was removed from cart!");
 					continue;
 				}
 			}
@@ -185,8 +186,8 @@ namespace Movies.Controllers
 			order.DateCreated = DateTime.Now;
 			order.Total = cart.Sum(x => x.Product.Price * x.Quantity);
 			order.UserId = _userManager.GetUserId(User);
-			ModelState.Remove("Id"); // ako ne maknemo Id iz model statea, onda ce se pri validaciji traziti da se popuni Id,
-			ModelState.Remove("OrderItems"); // ako ne maknemo OrderItems iz model statea, onda ce se pri validaciji traziti da se popuni OrderItems,
+			ModelState.Remove("Id");
+			ModelState.Remove("OrderItems");
 			ModelState.Remove("shippingsameaspersonal");
 
 			if (ModelState.IsValid)
@@ -194,7 +195,7 @@ namespace Movies.Controllers
 				_context.Order.Add(order);
 				_context.SaveChanges();
 				int order_id = order.Id; // ovo je Id koji je generiran u bazi
-				foreach (var item in cart) // dodajem OrderItem-e
+				foreach (var item in cart)
 				{
 					OrderItem orderItem = new OrderItem
 					{
@@ -209,7 +210,7 @@ namespace Movies.Controllers
 					_context.SaveChanges();
 				}
 				HttpContext.Session.Remove(SessionKeyName); // brisem cart iz sessiona
-				return RedirectToAction("Index", new { message = "Hvala na narudbi" });
+				return RedirectToAction("Index", new { message = "Hvala na narudbi!" });
 			}
 			else
 			{
@@ -223,7 +224,7 @@ namespace Movies.Controllers
 				}
 			}
 
-			return RedirectToAction("Order", new { errors });
+			return RedirectToAction("Order", new { errors = errors });
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

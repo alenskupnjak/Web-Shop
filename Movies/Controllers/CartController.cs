@@ -10,7 +10,6 @@ namespace Movies.Controllers
 		private readonly ApplicationDbContext _context;
 
 
-
 		public CartController(ApplicationDbContext context)
 		{
 			_context = context;

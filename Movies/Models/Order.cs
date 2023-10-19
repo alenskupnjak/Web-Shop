@@ -1,6 +1,7 @@
 ﻿using Movies.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Movies.Models
 {
@@ -92,7 +93,7 @@ namespace Movies.Models
 
 		#endregion
 
-
+		[AllowNull]
 		public string Message { get; set; }
 		public string UserId { get; set; }
 
