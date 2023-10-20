@@ -21,6 +21,7 @@ namespace Movies.Controllers
 			_context = context;
 			_userManager = userManager;
 		}
+
 		[HttpGet]
 		public IActionResult Index(string? message)
 		{
@@ -31,7 +32,6 @@ namespace Movies.Controllers
 		{
 			return View();
 		}
-
 
 
 		public IActionResult Product(int? id, int? categoryId)

@@ -40,6 +40,17 @@ namespace Movies.Data
 				Quantity = 177,
 
 			});
+
+			modelBuilder.Entity<ProductImage>().HasData(
+				new ProductImage
+				{
+					Id = 51,
+					ProductId = 51,
+					Title = "Rambo 2",
+					FileName = "/images/products/51/woman.jpg",
+					IsMainImage = true
+				});
+
 			modelBuilder.Entity<Product>().HasData(new Product
 			{
 				Id = 52,
@@ -54,6 +65,4 @@ namespace Movies.Data
 			base.OnModelCreating(modelBuilder);
 		}
 	}
-
-
 }

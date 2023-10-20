@@ -1,0 +1,23 @@
+﻿@model List<Movies.Models.OrderItem>
+
+<table class="table">
+	<thred>
+
+		<th scope="col">Product</th>
+		<th scope="col">Quantity</th>
+		<th scope="col">Price</th>
+		<th scope="col">Total</th>
+	</thred>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>@Html.DisplayFor(modelItem => item.ProductTitle)</td>
+				<td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+				<td>@Html.DisplayFor(modelItem => item.Price)</td>
+				<td>@((item.Price * item.Quantity).ToString("0.00")) €</td>
+			</tr>
+		}
+	</tbody>
+
+</table>
