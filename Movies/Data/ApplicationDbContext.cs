@@ -56,7 +56,7 @@ namespace Movies.Data
 			 {
 				 Id = 2,
 				 ProductId = 2,
-				 Title = "Jedan",
+				 Title = "Dva",
 				 FileName = "/images/products/2/two.png",
 				 IsMainImage = true
 			 });
@@ -65,7 +65,7 @@ namespace Movies.Data
 				{
 					Id = 3,
 					ProductId = 2,
-					Title = "Jedan",
+					Title = "Zena",
 					FileName = "/images/products/2/woman.jpg",
 					IsMainImage = true
 				});
@@ -74,7 +74,7 @@ namespace Movies.Data
 				{
 					Id = 4,
 					ProductId = 3,
-					Title = "Jedan",
+					Title = "Tri",
 					FileName = "/images/products/3/3_blue.png",
 					IsMainImage = true
 				});

@@ -1,23 +1,44 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Movies.Data
+@using Movies.Models
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
-<ul class="navbar-nav">
+@{
+	var user = await UserManager.GetUserAsync(User);
+}
 
-	@if (SignInManager.IsSignedIn(User))
+<ul class="navbar-nav">
+	@if (user != null)
 	{
-		<li class="nav-item">
-			<a class="nav-link text-dark" asp-area="Home" asp-controller="AdminUser" asp-action="Users">Upravljanje korisnicima</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name</a>
-		</li>
-		<li class="nav-item">
-			<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-				<button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-			</form>
-		</li>
+		var userRole = await UserManager.GetRolesAsync(user);
+		@switch (userRole[0])
+		{
+			case Roles.Admin:
+				<li class="nav-item">
+					<a class="nav-link text-dark" asp-controller="AdminUser" asp-action="Index">Upr korisnicima</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name</a>
+				</li>
+				<li class="nav-item">
+					<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+						<button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+					</form>
+				</li>
+				break;
+			case Roles.Member:
+			case Roles.User:
+				<li class="nav-item">
+					<a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name</a>
+				</li>
+				<li class="nav-item">
+					<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+						<button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+					</form>
+				</li>
+				break;
+		}
 	}
 	else
 	{
