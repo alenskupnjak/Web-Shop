@@ -12,8 +12,8 @@ using Movies.Data;
 namespace Movies.data.migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231021103450_step01")]
-    partial class step01
+    [Migration("20231021103926_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -300,7 +300,7 @@ namespace Movies.data.migrations
                             AccessFailedCount = 0,
                             Address = "Tu sam negdje",
                             City = "Sesvete",
-                            ConcurrencyStamp = "bc7a594b-2aee-43b2-b504-d4730e632615",
+                            ConcurrencyStamp = "346a936b-4759-4402-ad3d-3640ed2d6861",
                             Country = "Croatia",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
@@ -308,10 +308,10 @@ namespace Movies.data.migrations
                             LastName = "Polo",
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIs5ohqYHfVYm60ZzBW7UctzShd39q3M2Z/8Yewyn116V8faI+sZ08N72glReC6kaQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHR0W/C7LfBlm8gXNDYQR1/T6V0fKkdGlhE2ifXBKnxbuFoXrbQN9zvz2GjA8rU7gw==",
                             PhoneNumberConfirmed = false,
                             PostalCode = "10360",
-                            SecurityStamp = "96a66888-a442-4666-94a5-b32174a65554",
+                            SecurityStamp = "a48f76f2-dcd0-4029-9edc-819da09d165d",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         },
@@ -321,7 +321,7 @@ namespace Movies.data.migrations
                             AccessFailedCount = 0,
                             Address = "Sinj",
                             City = "Sinj",
-                            ConcurrencyStamp = "4a7a21b6-b362-4cab-b220-f5df6a25bc7f",
+                            ConcurrencyStamp = "1cae2796-f30c-40e9-b46f-b88a3934cc0a",
                             Country = "Croatia",
                             Email = "user@user.com",
                             EmailConfirmed = false,
@@ -329,10 +329,10 @@ namespace Movies.data.migrations
                             LastName = "Bulj",
                             LockoutEnabled = false,
                             NormalizedUserName = "USER@USER.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEA+WIfYYR0RouWgcH3LUEkRYQ96Pq4QKqt9IaX/xLdBcwHLx2ej3cDyw0b6dHZY8BA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAoZAlzP57DM92KxPxncEM+JYks64H2zgysPpHcopQBrSUfzj9RKCNqCenqbixaJVg==",
                             PhoneNumberConfirmed = false,
                             PostalCode = "10360",
-                            SecurityStamp = "6973e577-7562-465f-b47e-e14bb4113377",
+                            SecurityStamp = "78a151b4-eab0-4489-8afe-bcfc7b816f3d",
                             TwoFactorEnabled = false,
                             UserName = "user@user.com"
                         },
@@ -342,7 +342,7 @@ namespace Movies.data.migrations
                             AccessFailedCount = 0,
                             Address = "Zagreb",
                             City = "Rijeka",
-                            ConcurrencyStamp = "769c0f61-92dd-4d71-adc7-511b7ef06728",
+                            ConcurrencyStamp = "c82c0dcf-af10-4020-ba11-cb586ebbb0ef",
                             Country = "Croatia",
                             Email = "marko@user.com",
                             EmailConfirmed = false,
@@ -350,10 +350,10 @@ namespace Movies.data.migrations
                             LastName = "User",
                             LockoutEnabled = false,
                             NormalizedUserName = "MARKO@USER.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEA+WIfYYR0RouWgcH3LUEkRYQ96Pq4QKqt9IaX/xLdBcwHLx2ej3cDyw0b6dHZY8BA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAoZAlzP57DM92KxPxncEM+JYks64H2zgysPpHcopQBrSUfzj9RKCNqCenqbixaJVg==",
                             PhoneNumberConfirmed = false,
                             PostalCode = "10360",
-                            SecurityStamp = "7fa531dd-54eb-4507-b0c7-c492b192510a",
+                            SecurityStamp = "944667ba-0291-4a2a-bfe2-369e31bd1fee",
                             TwoFactorEnabled = false,
                             UserName = "marko@user.com"
                         });

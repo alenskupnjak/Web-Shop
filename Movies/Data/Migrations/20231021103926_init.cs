@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Movies.data.migrations
 {
     /// <inheritdoc />
-    public partial class step01 : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -323,9 +323,9 @@ namespace Movies.data.migrations
                 columns: new[] { "Id", "AccessFailedCount", "Address", "City", "ConcurrencyStamp", "Country", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PostalCode", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1", 0, "Tu sam negdje", "Sesvete", "bc7a594b-2aee-43b2-b504-d4730e632615", "Croatia", "admin@admin.com", false, "Marko Admin", "Polo", false, null, null, "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEIs5ohqYHfVYm60ZzBW7UctzShd39q3M2Z/8Yewyn116V8faI+sZ08N72glReC6kaQ==", null, false, "10360", "96a66888-a442-4666-94a5-b32174a65554", false, "admin@admin.com" },
-                    { "2", 0, "Sinj", "Sinj", "4a7a21b6-b362-4cab-b220-f5df6a25bc7f", "Croatia", "user@user.com", false, "Ivan", "Bulj", false, null, null, "USER@USER.COM", "AQAAAAIAAYagAAAAEA+WIfYYR0RouWgcH3LUEkRYQ96Pq4QKqt9IaX/xLdBcwHLx2ej3cDyw0b6dHZY8BA==", null, false, "10360", "6973e577-7562-465f-b47e-e14bb4113377", false, "user@user.com" },
-                    { "3", 0, "Zagreb", "Rijeka", "769c0f61-92dd-4d71-adc7-511b7ef06728", "Croatia", "marko@user.com", false, "Marko", "User", false, null, null, "MARKO@USER.COM", "AQAAAAIAAYagAAAAEA+WIfYYR0RouWgcH3LUEkRYQ96Pq4QKqt9IaX/xLdBcwHLx2ej3cDyw0b6dHZY8BA==", null, false, "10360", "7fa531dd-54eb-4507-b0c7-c492b192510a", false, "marko@user.com" }
+                    { "1", 0, "Tu sam negdje", "Sesvete", "346a936b-4759-4402-ad3d-3640ed2d6861", "Croatia", "admin@admin.com", false, "Marko Admin", "Polo", false, null, null, "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEHR0W/C7LfBlm8gXNDYQR1/T6V0fKkdGlhE2ifXBKnxbuFoXrbQN9zvz2GjA8rU7gw==", null, false, "10360", "a48f76f2-dcd0-4029-9edc-819da09d165d", false, "admin@admin.com" },
+                    { "2", 0, "Sinj", "Sinj", "1cae2796-f30c-40e9-b46f-b88a3934cc0a", "Croatia", "user@user.com", false, "Ivan", "Bulj", false, null, null, "USER@USER.COM", "AQAAAAIAAYagAAAAEAoZAlzP57DM92KxPxncEM+JYks64H2zgysPpHcopQBrSUfzj9RKCNqCenqbixaJVg==", null, false, "10360", "78a151b4-eab0-4489-8afe-bcfc7b816f3d", false, "user@user.com" },
+                    { "3", 0, "Zagreb", "Rijeka", "c82c0dcf-af10-4020-ba11-cb586ebbb0ef", "Croatia", "marko@user.com", false, "Marko", "User", false, null, null, "MARKO@USER.COM", "AQAAAAIAAYagAAAAEAoZAlzP57DM92KxPxncEM+JYks64H2zgysPpHcopQBrSUfzj9RKCNqCenqbixaJVg==", null, false, "10360", "944667ba-0291-4a2a-bfe2-369e31bd1fee", false, "marko@user.com" }
                 });
 
             migrationBuilder.InsertData(
