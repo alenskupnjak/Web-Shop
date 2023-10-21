@@ -9,18 +9,18 @@ using Movies.Data;
 
 #nullable disable
 
-namespace Movies.data.Migrations
+namespace Movies.data.migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230930172415_User")]
-    partial class User
+    [Migration("20231021103450_step01")]
+    partial class step01
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.7")
+                .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -50,6 +50,26 @@ namespace Movies.data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            Name = "Member",
+                            NormalizedName = "MEMBER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -139,6 +159,23 @@ namespace Movies.data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "2"
+                        },
+                        new
+                        {
+                            UserId = "2",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            UserId = "3",
+                            RoleId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -162,7 +199,7 @@ namespace Movies.data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Movies.Data.ApplicationUser", b =>
+            modelBuilder.Entity("Movies.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -255,6 +292,71 @@ namespace Movies.data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            Address = "Tu sam negdje",
+                            City = "Sesvete",
+                            ConcurrencyStamp = "bc7a594b-2aee-43b2-b504-d4730e632615",
+                            Country = "Croatia",
+                            Email = "admin@admin.com",
+                            EmailConfirmed = false,
+                            FirstName = "Marko Admin",
+                            LastName = "Polo",
+                            LockoutEnabled = false,
+                            NormalizedUserName = "ADMIN@ADMIN.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIs5ohqYHfVYm60ZzBW7UctzShd39q3M2Z/8Yewyn116V8faI+sZ08N72glReC6kaQ==",
+                            PhoneNumberConfirmed = false,
+                            PostalCode = "10360",
+                            SecurityStamp = "96a66888-a442-4666-94a5-b32174a65554",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@admin.com"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            Address = "Sinj",
+                            City = "Sinj",
+                            ConcurrencyStamp = "4a7a21b6-b362-4cab-b220-f5df6a25bc7f",
+                            Country = "Croatia",
+                            Email = "user@user.com",
+                            EmailConfirmed = false,
+                            FirstName = "Ivan",
+                            LastName = "Bulj",
+                            LockoutEnabled = false,
+                            NormalizedUserName = "USER@USER.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEA+WIfYYR0RouWgcH3LUEkRYQ96Pq4QKqt9IaX/xLdBcwHLx2ej3cDyw0b6dHZY8BA==",
+                            PhoneNumberConfirmed = false,
+                            PostalCode = "10360",
+                            SecurityStamp = "6973e577-7562-465f-b47e-e14bb4113377",
+                            TwoFactorEnabled = false,
+                            UserName = "user@user.com"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            AccessFailedCount = 0,
+                            Address = "Zagreb",
+                            City = "Rijeka",
+                            ConcurrencyStamp = "769c0f61-92dd-4d71-adc7-511b7ef06728",
+                            Country = "Croatia",
+                            Email = "marko@user.com",
+                            EmailConfirmed = false,
+                            FirstName = "Marko",
+                            LastName = "User",
+                            LockoutEnabled = false,
+                            NormalizedUserName = "MARKO@USER.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEA+WIfYYR0RouWgcH3LUEkRYQ96Pq4QKqt9IaX/xLdBcwHLx2ej3cDyw0b6dHZY8BA==",
+                            PhoneNumberConfirmed = false,
+                            PostalCode = "10360",
+                            SecurityStamp = "7fa531dd-54eb-4507-b0c7-c492b192510a",
+                            TwoFactorEnabled = false,
+                            UserName = "marko@user.com"
+                        });
                 });
 
             modelBuilder.Entity("Movies.Models.Category", b =>
@@ -273,6 +375,28 @@ namespace Movies.data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Title = "Drama"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Title = "Ratni"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Title = "Akcija"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Title = "SF"
+                        });
                 });
 
             modelBuilder.Entity("Movies.Models.Order", b =>
@@ -382,6 +506,56 @@ namespace Movies.data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Order");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BillingAddress = "Kašinska 50 C",
+                            BillingCity = "Sesvete",
+                            BillingCountry = "Croatia",
+                            BillingEmail = "alenskupnjak@yahoo.com",
+                            BillingFirstName = "Alen",
+                            BillingLastName = "Skupnjak",
+                            BillingPhone = "0997312485",
+                            BillingPostalCode = "10360",
+                            DateCreated = new DateTime(2023, 10, 21, 10, 36, 8, 2, DateTimeKind.Local),
+                            Message = "Poruka",
+                            ShippingAddress = "Kašinska 50C",
+                            ShippingCity = "Sesvete",
+                            ShippingCountry = "Croatia",
+                            ShippingEmail = "alenskupnjak@yahoo.com",
+                            ShippingFirstName = "Alen",
+                            ShippingLastName = "Skupnjak",
+                            ShippingPhone = "0997312485",
+                            ShippingPostalCode = "10360",
+                            Total = 10m,
+                            UserId = "1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BillingAddress = "Kašinska 50C",
+                            BillingCity = "Zagreb",
+                            BillingCountry = "Croatia",
+                            BillingEmail = "alenskupnjak@yahoo.com",
+                            BillingFirstName = "Mirela",
+                            BillingLastName = "Skupnjak",
+                            BillingPhone = "099123456789",
+                            BillingPostalCode = "10360",
+                            DateCreated = new DateTime(2023, 1, 1, 9, 36, 8, 2, DateTimeKind.Local),
+                            Message = "Poruka",
+                            ShippingAddress = "Kašinska 50C",
+                            ShippingCity = "Sesvete",
+                            ShippingCountry = "Croatia",
+                            ShippingEmail = "alenskupnjak@yahoo.com",
+                            ShippingFirstName = "Alen",
+                            ShippingLastName = "Skupnjak",
+                            ShippingPhone = "0997312485",
+                            ShippingPostalCode = "10360",
+                            Total = 67m,
+                            UserId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Movies.Models.OrderItem", b =>
@@ -411,6 +585,56 @@ namespace Movies.data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("OrderItem");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            OrderId = 1,
+                            Price = 10m,
+                            ProductId = 1,
+                            Quantity = 1m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            OrderId = 1,
+                            Price = 16m,
+                            ProductId = 2,
+                            Quantity = 1m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            OrderId = 1,
+                            Price = 41m,
+                            ProductId = 3,
+                            Quantity = 1m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            OrderId = 2,
+                            Price = 10m,
+                            ProductId = 1,
+                            Quantity = 1m
+                        },
+                        new
+                        {
+                            Id = 5,
+                            OrderId = 2,
+                            Price = 16m,
+                            ProductId = 2,
+                            Quantity = 1m
+                        },
+                        new
+                        {
+                            Id = 6,
+                            OrderId = 2,
+                            Price = 41m,
+                            ProductId = 3,
+                            Quantity = 1m
+                        });
                 });
 
             modelBuilder.Entity("Movies.Models.Product", b =>
@@ -442,6 +666,62 @@ namespace Movies.data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Product");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Active = true,
+                            Description = "01 des",
+                            Price = 10m,
+                            Quantity = 10m,
+                            Title = "Titanic"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = true,
+                            Description = "02 des",
+                            Price = 16m,
+                            Quantity = 177m,
+                            Title = "Rambo 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Active = true,
+                            Description = "03 des",
+                            Price = 41m,
+                            Quantity = 333m,
+                            Title = "Code red"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Active = false,
+                            Description = "04 des",
+                            Price = 41m,
+                            Quantity = 0m,
+                            Title = "300"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Active = true,
+                            Description = "05 des",
+                            Price = 31.31m,
+                            Quantity = 222m,
+                            Title = "Gladiator"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Active = true,
+                            Description = "TOP title",
+                            Price = 11m,
+                            Quantity = 444m,
+                            Title = "TOP GUN"
+                        });
                 });
 
             modelBuilder.Entity("Movies.Models.ProductCategory", b =>
@@ -465,6 +745,44 @@ namespace Movies.data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductCategory");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 2,
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 3,
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 1,
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 2,
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 3,
+                            ProductId = 2
+                        });
                 });
 
             modelBuilder.Entity("Movies.Models.ProductImage", b =>
@@ -496,6 +814,40 @@ namespace Movies.data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductImage");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FileName = "/images/products/1/jedan.png",
+                            IsMainImage = true,
+                            ProductId = 1,
+                            Title = "Jedan"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FileName = "/images/products/2/two.png",
+                            IsMainImage = true,
+                            ProductId = 2,
+                            Title = "Jedan"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FileName = "/images/products/2/woman.jpg",
+                            IsMainImage = true,
+                            ProductId = 2,
+                            Title = "Jedan"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FileName = "/images/products/3/3_blue.png",
+                            IsMainImage = true,
+                            ProductId = 3,
+                            Title = "Jedan"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -509,7 +861,7 @@ namespace Movies.data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Movies.Data.ApplicationUser", null)
+                    b.HasOne("Movies.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -518,7 +870,7 @@ namespace Movies.data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Movies.Data.ApplicationUser", null)
+                    b.HasOne("Movies.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -533,7 +885,7 @@ namespace Movies.data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Movies.Data.ApplicationUser", null)
+                    b.HasOne("Movies.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -542,7 +894,7 @@ namespace Movies.data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Movies.Data.ApplicationUser", null)
+                    b.HasOne("Movies.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -551,7 +903,7 @@ namespace Movies.data.Migrations
 
             modelBuilder.Entity("Movies.Models.Order", b =>
                 {
-                    b.HasOne("Movies.Data.ApplicationUser", null)
+                    b.HasOne("Movies.Models.AppUser", null)
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -597,7 +949,7 @@ namespace Movies.data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Movies.Data.ApplicationUser", b =>
+            modelBuilder.Entity("Movies.Models.AppUser", b =>
                 {
                     b.Navigation("Orders");
                 });

@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Movies.data.Migrations
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace Movies.data.migrations
 {
     /// <inheritdoc />
     public partial class step01 : Migration
@@ -304,6 +306,106 @@ namespace Movies.data.Migrations
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "1", null, "User", "USER" },
+                    { "2", null, "Admin", "ADMIN" },
+                    { "3", null, "Member", "MEMBER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "Address", "City", "ConcurrencyStamp", "Country", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "PostalCode", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "1", 0, "Tu sam negdje", "Sesvete", "bc7a594b-2aee-43b2-b504-d4730e632615", "Croatia", "admin@admin.com", false, "Marko Admin", "Polo", false, null, null, "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEIs5ohqYHfVYm60ZzBW7UctzShd39q3M2Z/8Yewyn116V8faI+sZ08N72glReC6kaQ==", null, false, "10360", "96a66888-a442-4666-94a5-b32174a65554", false, "admin@admin.com" },
+                    { "2", 0, "Sinj", "Sinj", "4a7a21b6-b362-4cab-b220-f5df6a25bc7f", "Croatia", "user@user.com", false, "Ivan", "Bulj", false, null, null, "USER@USER.COM", "AQAAAAIAAYagAAAAEA+WIfYYR0RouWgcH3LUEkRYQ96Pq4QKqt9IaX/xLdBcwHLx2ej3cDyw0b6dHZY8BA==", null, false, "10360", "6973e577-7562-465f-b47e-e14bb4113377", false, "user@user.com" },
+                    { "3", 0, "Zagreb", "Rijeka", "769c0f61-92dd-4d71-adc7-511b7ef06728", "Croatia", "marko@user.com", false, "Marko", "User", false, null, null, "MARKO@USER.COM", "AQAAAAIAAYagAAAAEA+WIfYYR0RouWgcH3LUEkRYQ96Pq4QKqt9IaX/xLdBcwHLx2ej3cDyw0b6dHZY8BA==", null, false, "10360", "7fa531dd-54eb-4507-b0c7-c492b192510a", false, "marko@user.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Category",
+                columns: new[] { "Id", "Title" },
+                values: new object[,]
+                {
+                    { 1, "Drama" },
+                    { 2, "Ratni" },
+                    { 3, "Akcija" },
+                    { 4, "SF" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Product",
+                columns: new[] { "Id", "Active", "Description", "Price", "Quantity", "Title" },
+                values: new object[,]
+                {
+                    { 1, true, "01 des", 10m, 10m, "Titanic" },
+                    { 2, true, "02 des", 16m, 177m, "Rambo 2" },
+                    { 3, true, "03 des", 41m, 333m, "Code red" },
+                    { 4, false, "04 des", 41m, 0m, "300" },
+                    { 5, true, "05 des", 31.31m, 222m, "Gladiator" },
+                    { 6, true, "TOP title", 11m, 444m, "TOP GUN" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "2", "1" },
+                    { "1", "2" },
+                    { "1", "3" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Order",
+                columns: new[] { "Id", "BillingAddress", "BillingCity", "BillingCountry", "BillingEmail", "BillingFirstName", "BillingLastName", "BillingPhone", "BillingPostalCode", "DateCreated", "Message", "ShippingAddress", "ShippingCity", "ShippingCountry", "ShippingEmail", "ShippingFirstName", "ShippingLastName", "ShippingPhone", "ShippingPostalCode", "Total", "UserId" },
+                values: new object[,]
+                {
+                    { 1, "Kašinska 50 C", "Sesvete", "Croatia", "alenskupnjak@yahoo.com", "Alen", "Skupnjak", "0997312485", "10360", new DateTime(2023, 10, 21, 10, 36, 8, 2, DateTimeKind.Local), "Poruka", "Kašinska 50C", "Sesvete", "Croatia", "alenskupnjak@yahoo.com", "Alen", "Skupnjak", "0997312485", "10360", 10m, "1" },
+                    { 2, "Kašinska 50C", "Zagreb", "Croatia", "alenskupnjak@yahoo.com", "Mirela", "Skupnjak", "099123456789", "10360", new DateTime(2023, 1, 1, 9, 36, 8, 2, DateTimeKind.Local), "Poruka", "Kašinska 50C", "Sesvete", "Croatia", "alenskupnjak@yahoo.com", "Alen", "Skupnjak", "0997312485", "10360", 67m, "1" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProductCategory",
+                columns: new[] { "Id", "CategoryId", "ProductId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 2, 1 },
+                    { 3, 3, 1 },
+                    { 4, 1, 2 },
+                    { 5, 2, 2 },
+                    { 6, 3, 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProductImage",
+                columns: new[] { "Id", "FileName", "IsMainImage", "ProductId", "Title" },
+                values: new object[,]
+                {
+                    { 1, "/images/products/1/jedan.png", true, 1, "Jedan" },
+                    { 2, "/images/products/2/two.png", true, 2, "Jedan" },
+                    { 3, "/images/products/2/woman.jpg", true, 2, "Jedan" },
+                    { 4, "/images/products/3/3_blue.png", true, 3, "Jedan" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "OrderItem",
+                columns: new[] { "Id", "OrderId", "Price", "ProductId", "Quantity" },
+                values: new object[,]
+                {
+                    { 1, 1, 10m, 1, 1m },
+                    { 2, 1, 16m, 2, 1m },
+                    { 3, 1, 41m, 3, 1m },
+                    { 4, 2, 10m, 1, 1m },
+                    { 5, 2, 16m, 2, 1m },
+                    { 6, 2, 41m, 3, 1m }
                 });
 
             migrationBuilder.CreateIndex(
