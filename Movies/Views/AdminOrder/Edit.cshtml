@@ -106,12 +106,18 @@
 			</div>
 		</div>
 	</div>
-</form>
-<div class="row">
-	<div class="form-group mt-2">
-		<input type="submit" value="Save" class="btn btn-info" />
-		<a asp-action="Index" class="btn btn-dark  float-end">Back to List</a>
+
+	<div class="row">
+		<div class="form-group mt-2">
+			<input type="submit" value="Save" class="btn btn-info" />
+			<a asp-action="Index" class="btn btn-dark float-end">Back to List</a>
+		</div>
 	</div>
-</div>
+
+</form>
+<hr />
+<a asp-action="Index" asp-controller="AdminOrderItem" asp-route-id="@Model.Id">Edit order items</a>
+<partial name="_OrderItemsPartial" for="@Model.OrderItems" />
+
 
 
