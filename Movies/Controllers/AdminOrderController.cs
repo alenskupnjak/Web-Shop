@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Movies.Data;
 using Movies.Models;
@@ -59,22 +54,6 @@ namespace Movies.Controllers
 												where product.Id == order_item.ProductId
 												select product.Title).FirstOrDefault()
 			}).ToList();
-
-
-			return View(order);
-		}
-
-		// POST: AdminOrder/Create
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("Id,DateCreated,Total,BillingFirstName,BillingLastName,BillingEmail,BillingPhone,BillingAddress,BillingCity,BillingPostalCode,BillingCountry,ShippingFirstName,ShippingLastName,ShippingEmail,ShippingPhone,ShippingAddress,ShippingCity,ShippingPostalCode,ShippingCountry,Message,UserId")] Order order)
-		{
-			if (ModelState.IsValid)
-			{
-				_context.Add(order);
-				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(Index));
-			}
 			return View(order);
 		}
 

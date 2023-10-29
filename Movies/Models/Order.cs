@@ -11,7 +11,7 @@ namespace Movies.Models
 		public int Id { get; set; }
 
 		[DataType(DataType.Date)]
-		[DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 		public DateTime DateCreated { get; set; } = DateTime.Now;
 
 		[Required(ErrorMessage = "Total price is required")]
